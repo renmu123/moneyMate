@@ -11,16 +11,6 @@ import (
 
 var DB *gorm.DB
 
-type Category struct {
-	gorm.Model
-	Name string
-}
-
-type Tag struct {
-	gorm.Model
-	Name string
-}
-
 func init() {
 	var (
 		err                                               error
@@ -54,7 +44,7 @@ func init() {
 	DB.DB().SetMaxIdleConns(10)
 	DB.DB().SetMaxOpenConns(100)
 
-	DB.AutoMigrate(&Record{}, &Category{}, &Tag{})
+	DB.AutoMigrate(&Record{}, &Category{}, &Tags{})
 }
 
 func CloseDB() {
