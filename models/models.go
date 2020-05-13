@@ -9,15 +9,17 @@ import (
 	"money/config"
 )
 
-var db *gorm.DB
+var DB *gorm.DB
 
-type Model struct {
-	ID         int `gorm:"primary_key" json:"id"`
-	CreatedOn  int `json:"created_on"`
-	ModifiedOn int `json:"modified_on"`
+type Category struct {
+	gorm.Model
+	Name string
 }
 
-const A1 = 11
+type Tag struct {
+	gorm.Model
+	Name string
+}
 
 func init() {
 	var (
@@ -26,9 +28,6 @@ func init() {
 	)
 
 	sec := config.GetConfig().Database
-	//if err != nil {
-	//	log.Fatal(2, "Fail to get section 'database': %v", err)
-	//}
 
 	dbType = sec.Type
 	dbName = sec.DbName
@@ -37,7 +36,7 @@ func init() {
 	host = sec.Host
 	//tablePrefix = sec.Key("TABLE_PREFIX").String()
 
-	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
+	DB, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		user,
 		password,
 		host,
@@ -51,11 +50,13 @@ func init() {
 		return tablePrefix + defaultTableName
 	}
 
-	db.SingularTable(true)
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(100)
+	DB.SingularTable(true)
+	DB.DB().SetMaxIdleConns(10)
+	DB.DB().SetMaxOpenConns(100)
+
+	DB.AutoMigrate(&Record{}, &Category{}, &Tag{})
 }
 
 func CloseDB() {
-	defer db.Close()
+	defer DB.Close()
 }

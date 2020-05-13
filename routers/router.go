@@ -25,6 +25,8 @@ func InitRouter() *gin.Engine {
 		apiv1.PUT("/tags/:id", v1.EditTag)
 		//删除指定标签
 		apiv1.DELETE("/tags/:id", v1.DeleteTag)
+
+		apiv1.POST("/record", v1.AddRecord)
 	}
 
 	return r
