@@ -3,13 +3,17 @@ package main
 import (
 	"fmt"
 	"money/config"
-	"money/models"
 	"money/routers"
 	"net/http"
 )
 
 func main() {
-	fmt.Println(models.DB)
+	m := map[string]string{
+		"alice":   "asdsad",
+		"charlie": "bbbhb",
+	}
+	fmt.Println(m)
+
 	fmt.Println(config.RunMode)
 	router := routers.InitRouter()
 
