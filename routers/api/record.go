@@ -18,7 +18,8 @@ func AddRecord(c *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(400, gin.H{
-			"errow": err,
+			"code":  0,
+			"error": err,
 		})
 	} else {
 		models.DB.Create(&record)

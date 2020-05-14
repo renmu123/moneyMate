@@ -29,5 +29,13 @@ func InitRouter() *gin.Engine {
 		apiv1.POST("/record", v1.AddRecord)
 	}
 
+	apiCategory := r.Group("/api/v1/category")
+	{
+		apiCategory.POST("/add", v1.AddCategory)
+		apiCategory.PUT("/update/:id", v1.UpdateCategory)
+		apiCategory.GET("/all", v1.GetCategory)
+		apiCategory.DELETE("/delete/:id", v1.GetCategory)
+	}
+
 	return r
 }
