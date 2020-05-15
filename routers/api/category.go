@@ -3,10 +3,12 @@ package v1
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	v "github.com/go-playground/validator/v10"
 	"money/models"
 	"money/pkg/e"
 	"money/pkg/validator"
 	"net/http"
+	"strings"
 )
 
 //获取所有分类
@@ -43,19 +45,29 @@ func UpdateCategory(c *gin.Context) {
 	_ = c.ShouldBindJSON(&category)
 	err := validate.Struct(category)
 	if err != nil {
-		fmt.Println(err)
+		res := CommonError(err)
 		c.JSON(400, gin.H{
-			"code":  0,
-			"error": err,
+			"code":  10,
+			"error": res,
 		})
 	} else {
-		//category.Name = "cc"
 		data := models.DB.Model(&category).Update(category)
 		c.JSON(http.StatusOK, gin.H{
 			"code": e.SUCCESS,
 			"data": data.Value,
 		})
 	}
+}
+
+func CommonError(err error) map[string]string {
+	errs := err.(v.ValidationErrors)
+	res := make(map[string]string)
+	for _, er := range errs {
+		f := strings.ToLower(er.Field())
+		fmt.Println(f)
+		res[f] = er.Tag()
+	}
+	return res
 }
 
 //删除文章标签
