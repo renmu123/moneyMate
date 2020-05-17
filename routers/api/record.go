@@ -14,6 +14,7 @@ func AddRecord(c *gin.Context) {
 
 	var record models.Record
 	_ = c.ShouldBindJSON(&record)
+	fmt.Println(record.Name)
 	err := validate.Struct(record)
 	if err != nil {
 		fmt.Println(err)

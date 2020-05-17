@@ -34,7 +34,7 @@ func InitRouter() *gin.Engine {
 		apiCategory.POST("/add", v1.AddCategory)
 		apiCategory.PUT("/update/:id", v1.UpdateCategory)
 		apiCategory.GET("/all", v1.GetCategory)
-		apiCategory.DELETE("/delete/:id", v1.GetCategory)
+		apiCategory.DELETE("/delete/:id", v1.DeleteCategory)
 	}
 
 	return r

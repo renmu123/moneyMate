@@ -1,7 +1,10 @@
 package models
 
+import "github.com/jinzhu/gorm"
+
 type Category struct {
-	ID   int
-	Name string `validate:"required" json:"name"`
-	Icon string
+	gorm.Model
+	RecordID int    `json:"record_id" validate:"required"`
+	Name     string `validate:"required" json:"name"`
+	Icon     string
 }
