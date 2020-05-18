@@ -14,21 +14,19 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 
 	gin.SetMode(config.GetConfig().RunMode)
-
-	apiv1 := r.Group("/api/v1")
+	// 标签
+	apiv1 := r.Group("/api/v1/tag")
 	{
 		//获取标签列表
-		apiv1.GET("/tags", v1.GetTags)
+		apiv1.GET("/all", v1.GetTags)
 		//新建标签
-		apiv1.POST("/tags", v1.AddTag)
+		apiv1.POST("/add", v1.AddTag)
 		//更新指定标签
-		apiv1.PUT("/tags/:id", v1.UpdateTag)
+		apiv1.PUT("/update/:id", v1.UpdateTag)
 		//删除指定标签
-		apiv1.DELETE("/tags/:id", v1.DeleteTag)
-
-		apiv1.POST("/record", v1.AddRecord)
+		apiv1.DELETE("/delete/:id", v1.DeleteTag)
 	}
-
+	// 分类
 	apiCategory := r.Group("/api/v1/category")
 	{
 		apiCategory.POST("/add", v1.AddCategory)
@@ -36,6 +34,21 @@ func InitRouter() *gin.Engine {
 		apiCategory.GET("/all", v1.GetCategory)
 		apiCategory.DELETE("/delete/:id", v1.DeleteCategory)
 	}
-
+	// 记录
+	apiRecord := r.Group("/api/v1/record")
+	{
+		apiRecord.POST("/add", v1.AddRecord)
+		apiRecord.PUT("/delete/:id", v1.UpdateRecord)
+		apiRecord.GET("/all", v1.GetRecord)
+		apiRecord.DELETE("/:id", v1.DeleteRecord)
+	}
+	// 账户
+	apiAccount := r.Group("/api/v1/acount")
+	{
+		apiAccount.POST("/add", v1.AddAccount)
+		apiAccount.PUT("/delete/:id", v1.UpdateAccount)
+		apiAccount.GET("/all", v1.GetAccount)
+		apiAccount.DELETE("/:id", v1.DeleteAccount)
+	}
 	return r
 }

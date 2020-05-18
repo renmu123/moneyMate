@@ -12,9 +12,9 @@ import (
 )
 
 //获取所有分类
-func GetCategory(c *gin.Context) {
-	var category models.Category
-	data := models.DB.Find(&category)
+func GetAccount(c *gin.Context) {
+	var account models.Account
+	data := models.DB.Find(&account)
 	c.JSON(http.StatusOK, gin.H{
 		"code": e.SUCCESS,
 		"data": data.Value,
@@ -22,12 +22,12 @@ func GetCategory(c *gin.Context) {
 }
 
 //新增分类
-func AddCategory(c *gin.Context) {
-	var category models.Category
+func AddAccount(c *gin.Context) {
+	var account models.Account
 	validate := validator.Validate
 
-	_ = c.ShouldBindJSON(&category)
-	err := validate.Struct(category)
+	_ = c.ShouldBindJSON(&account)
+	err := validate.Struct(account)
 	if err != nil {
 		res := utils.HandleCommonError(err)
 		c.JSON(400, gin.H{
@@ -35,7 +35,7 @@ func AddCategory(c *gin.Context) {
 			"error": res,
 		})
 	} else {
-		data := models.DB.Create(&category)
+		data := models.DB.Create(&account)
 		fmt.Println(data)
 		c.JSON(http.StatusOK, gin.H{
 			"code": e.SUCCESS,
@@ -45,12 +45,12 @@ func AddCategory(c *gin.Context) {
 }
 
 //修改分类
-func UpdateCategory(c *gin.Context) {
-	var category models.Category
+func UpdateAccount(c *gin.Context) {
+	var account models.Account
 	validate := validator.Validate
 
-	_ = c.ShouldBindJSON(&category)
-	err := validate.Struct(category)
+	_ = c.ShouldBindJSON(&account)
+	err := validate.Struct(account)
 	if err != nil {
 		res := utils.HandleCommonError(err)
 		c.JSON(400, gin.H{
@@ -58,7 +58,7 @@ func UpdateCategory(c *gin.Context) {
 			"error": res,
 		})
 	} else {
-		data := models.DB.Model(&category).Update(category)
+		data := models.DB.Model(&account).Update(account)
 		c.JSON(http.StatusOK, gin.H{
 			"code": e.SUCCESS,
 			"data": data.Value,
@@ -67,8 +67,8 @@ func UpdateCategory(c *gin.Context) {
 }
 
 //删除文章标签
-func DeleteCategory(c *gin.Context) {
-	var category models.Category
+func DeleteAccount(c *gin.Context) {
+	var account models.AccountS
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -76,7 +76,7 @@ func DeleteCategory(c *gin.Context) {
 			"error": "传入的id错误",
 		})
 	} else {
-		data := models.DB.Model(&category).Delete(id)
+		data := models.DB.Model(&account).Delete(id)
 		c.JSON(http.StatusOK, gin.H{
 			"code": e.SUCCESS,
 			"data": data.Value,
