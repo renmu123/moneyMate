@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"money/config"
 	v1 "money/routers/api"
@@ -12,6 +13,8 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Logger())
 
 	r.Use(gin.Recovery())
+
+	r.Use(cors.Default())
 
 	gin.SetMode(config.GetConfig().RunMode)
 	// 标签

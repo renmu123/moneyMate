@@ -68,7 +68,7 @@ func UpdateAccount(c *gin.Context) {
 
 //删除文章标签
 func DeleteAccount(c *gin.Context) {
-	var account models.AccountS
+	var account models.Account
 	id, err := strconv.ParseInt(c.Param("id"), 10, 64)
 	if err != nil {
 		c.JSON(400, gin.H{
